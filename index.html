@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Estimation des sprints</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        max-width: 300px;
+        margin: 40px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+      }
+
+      label {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+      }
+
+      input[type="number"] {
+        width: 60px;
+      }
+
+      .result {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      .section {
+        margin-top: 30px;
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Estimation des sprints</h2>
+
+    <form id="sprintForm">
+      <label
+        >🔵 XS (1 sprint) <input type="number" id="xs" min="0" value="0"
+      /></label>
+      <label
+        >🟢 S (2 sprints) <input type="number" id="s" min="0" value="0"
+      /></label>
+      <label
+        >🟡 M (3 sprints) <input type="number" id="m" min="0" value="0"
+      /></label>
+      <label
+        >🟠 L (6 sprints) <input type="number" id="l" min="0" value="0"
+      /></label>
+      <label
+        >🔴 XL (12 sprints) <input type="number" id="xl" min="0" value="0"
+      /></label>
+    </form>
+
+    <div class="result">📦 Total : <span id="total">0</span> sprints</div>
+
+    <div class="section">
+      <label
+        >👨‍💻 Nombre d'ingé <input type="number" id="nbInge" min="1" value="3"
+      /></label>
+      <label
+        >📅 Nombre de sprints
+        <input type="number" id="nbSprints" min="1" value="6"
+      /></label>
+      <div class="result">🎯 Cible : <span id="cible">18</span> points</div>
+    </div>
+
+    <script>
+      const weights = {
+        xs: 1,
+        s: 2,
+        m: 3,
+        l: 6,
+        xl: 12,
+      };
+
+      const inputs = document.querySelectorAll("#sprintForm input");
+      const totalEl = document.getElementById("total");
+
+      function updateTotal() {
+        let total = 0;
+        inputs.forEach((input) => {
+          const val = parseInt(input.value, 10) || 0;
+          total += val * weights[input.id];
+        });
+        totalEl.textContent = total;
+      }
+
+      inputs.forEach((input) => {
+        input.addEventListener("input", updateTotal);
+      });
+
+      updateTotal(); // initial
+
+      const nbIngeInput = document.getElementById("nbInge");
+      const nbSprintsInput = document.getElementById("nbSprints");
+      const cibleEl = document.getElementById("cible");
+
+      function updateCible() {
+        const inge = parseInt(nbIngeInput.value, 10) || 0;
+        const sprints = parseInt(nbSprintsInput.value, 10) || 0;
+        cibleEl.textContent = inge * sprints;
+      }
+
+      nbIngeInput.addEventListener("input", updateCible);
+      nbSprintsInput.addEventListener("input", updateCible);
+
+      updateCible(); // initial
+    </script>
+  </body>
+</html>
