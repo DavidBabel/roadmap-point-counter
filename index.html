@@ -59,13 +59,14 @@
     <div class="result">📦 Total : <span id="total">0</span> sprint points</div>
 
     <div class="section">
-      <label
-        >👨‍💻 Nombre d'ingé <input type="number" id="nbInge" min="1" value="3"
-      /></label>
-      <label
-        >📅 Nombre de sprints
-        <input type="number" id="nbSprints" min="1" value="6"
-      /></label>
+      <label>
+        👨‍💻 Nombre d'ingé
+        <input type="number" id="nbInge" min="0" step="0.5" value="3" />
+      </label>
+      <label>
+        📅 Nombre de sprints
+        <input type="number" id="nbSprints" min="1" value="6" />
+      </label>
       <div class="result">
         🎯 Cible : <span id="cible">18</span> sprint points
       </div>
@@ -103,9 +104,9 @@
       const cibleEl = document.getElementById("cible");
 
       function updateCible() {
-        const inge = parseInt(nbIngeInput.value, 10) || 0;
+        const inge = parseFloat(nbIngeInput.value) || 0;
         const sprints = parseInt(nbSprintsInput.value, 10) || 0;
-        cibleEl.textContent = inge * sprints;
+        cibleEl.textContent = (inge * sprints).toFixed(1);
       }
 
       nbIngeInput.addEventListener("input", updateCible);
